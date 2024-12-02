@@ -6,7 +6,7 @@ export default class Game {
     this.winner = null;
   }
 
-  joinGame(user2Name) {
+  joinExistingGame(user2Name) {
     if (this.user2) throw new Error('No more users allowed!');
     this.user2 = { name: user2Name, move: null };
   }
