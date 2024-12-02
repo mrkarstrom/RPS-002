@@ -33,11 +33,28 @@ export const joinGame = (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-
 };
 
-export const makeMove = (req, res) => {
-    
-}
+export const makeUserMove = (req, res) => {
+  const { id } = req.params;
+  const { name, move } = req.body;
+
+  const game = games.get(id);
+
+  if (!game)
+    res.status(404).json({ message: `The game id: ${id} was not found.` });
+
+  try {
+    game.makeMove(name, move);
+    res.json({
+      id: game.id,
+      user1: game.user1,
+      user2: game.user2,
+      winner: game.winner,
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 //getGame
