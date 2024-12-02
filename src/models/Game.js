@@ -14,7 +14,8 @@ export default class Game {
   makeMove(userName, move) {
     const validMoves = ['rock', 'paper', 'scissors'];
 
-    if (!validMoves.includes(move.toLowerCase()))
+    move = move.toLowerCase();
+    if (!validMoves.includes(move))
       throw new Error(
         `Sorry, but ${move} is not a valid move, chose from rock, paper or scissors!`
       );
@@ -25,14 +26,14 @@ export default class Game {
       );
 
     if (this.user1.name === userName) this.user1.move = move;
-    if (this.user2?.name === userName) this.user2.move = move;
-
-    if (this.user1.move && this.user2.move) decideWinner();
+    else if (this.user2?.name === userName) this.user2.move = move;
+    else throw new Error('User not in the game.');
+    if (this.user1.move && this.user2.move) this.decideWinner();
   }
 
   decideWinner() {
-    const { move: move1 } = this.user1.move;
-    const { move: move2 } = this.user2.move;
+    const { move: move1 } = this.user1;
+    const { move: move2 } = this.user2;
 
     if (move1 === move2) this.winner = 'Draw!';
     else if (
