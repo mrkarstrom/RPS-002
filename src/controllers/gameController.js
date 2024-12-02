@@ -57,4 +57,16 @@ export const makeUserMove = (req, res) => {
   }
 };
 
-//getGame
+export const getGame = (req, res) => {
+  const { id } = req.params;
+
+  const game = games.get(id);
+  if (!game) res.status(400).json({ message: 'Game was not found.' });
+
+  res.json({
+    id: game.id,
+    user1: game.user1,
+    user2: game.user2,
+    winner: game.winner,
+  });
+};
